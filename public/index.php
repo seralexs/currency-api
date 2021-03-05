@@ -2,10 +2,8 @@
 
 require '../vendor/autoload.php';
 
-$routes = require '../config/routes/routes.php';
-$router = new \Core\Router\Router($routes);
+$app = require '../src/bootstrap.php';
 
-$app = new \Core\Application($router);
 $app->handleRequest();
 
 //phpinfo();

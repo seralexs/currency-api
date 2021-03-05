@@ -21,11 +21,10 @@ class Router implements RouterInterface
         return $this->routes;
     }
 
-    public function handleRequest(): void
+    public function handleRequest($container): void
     {
         $uri = $_SERVER['REQUEST_URI'];
-//echo $uri;
-//die();
+
         if ($this->match($uri)) {
             $controllerClass = $this->getNamespace().$this->parameters['controller'];
 
@@ -33,7 +32,7 @@ class Router implements RouterInterface
                 $controller = new $controllerClass();
 
                 if (method_exists($controller, $this->parameters['action']) && is_callable([$controller, $this->parameters['action']])) {
-                    $controller->{$this->parameters['action']}();
+                    $container->call([$controller, $this->parameters['action']]);
                 } else {
                     throw new \Exception('There`s no '.$this->parameters['action'].' method in '.$controllerClass);
                 }

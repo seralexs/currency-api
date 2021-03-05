@@ -3,15 +3,14 @@
 
 namespace App\Controllers;
 
+use Core\Request\Request;
 
 class HomePageController
 {
-    public function index()
+    public function index(Request $request)
     {
-        echo 'hello from index';
+        echo $request->getClientIp();
+        echo 'Request injected automatically';
         die();
-        return [
-            'hello'
-        ];
     }
 }

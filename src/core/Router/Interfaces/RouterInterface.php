@@ -6,5 +6,5 @@ namespace Core\Router\Interfaces;
 
 interface RouterInterface
 {
-    public function handleRequest();
+    public function handleRequest($container);
 }

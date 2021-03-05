@@ -10,10 +10,12 @@ use Core\Router\Router;
 class Application
 {
     private ?RouterInterface $router = null;
+    private $container;
 
-    public function __construct(RouterInterface $router)
+    public function __construct(RouterInterface $router, $container)
     {
         $this->router = $router;
+        $this->container = $container;
     }
 
     public function boot(): self
@@ -24,7 +26,7 @@ class Application
     public function handleRequest(): void
     {
         if (!is_null($this->router)) {
-            $this->router->handleRequest();
+            $this->router->handleRequest($this->container);
         }
     }
 }
