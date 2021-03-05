@@ -1,4 +1,4 @@
-# Currency
+# Currency API
 
 Currency exchange rates API 
 
