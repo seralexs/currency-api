@@ -4,7 +4,6 @@
 namespace Core\Currency;
 
 use Core\Currency\Interfaces\CurrencyClientInterface;
-use GuzzleHttp\Psr7\Response;
 
 class Currency
 {
@@ -20,14 +19,14 @@ class Currency
         return $this->client->request($method, $url, $data)->getBody();
     }
 
-    public function getCurrencyHistoryAgainstBase(string $baseCurrency, $startAt = null, $endAt = null)
+    public function getCurrencyHistoryAgainstBase(string $currency, string $baseCurrency, $startAt = null, $endAt = null)
     {
-        //todo time range
         $parameters = [
             'query' => [
+                'symbols' => $currency,
                 'base' => $baseCurrency,
-                'start_at' => '2020-01-01',
-                'end_at' => '2020-02-01',
+                'start_at' => !is_null($startAt) ? $startAt : (new \DateTime())->modify('-1 month')->format('Y-m-d'),
+                'end_at' => !is_null($endAt) ? $endAt : (new \DateTime())->format('Y-m-d'),
             ]
         ];
 

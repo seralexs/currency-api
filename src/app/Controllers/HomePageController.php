@@ -12,7 +12,7 @@ class HomePageController
 {
     public function index(Request $request, Currency $currencyApi)
     {
-        echo $currencyApi->getCurrencyHistoryAgainstBase('RUB');
+        echo $currencyApi->getCurrencyHistoryAgainstBase('USD', 'EUR', '2021-02-01', '2021-02-10');
 //        echo $request->getClientIp();
 //        echo 'Request injected automatically';
         die();
