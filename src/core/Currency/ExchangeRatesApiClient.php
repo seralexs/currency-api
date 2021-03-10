@@ -5,7 +5,6 @@ namespace Core\Currency;
 
 
 use Core\Currency\Interfaces\CurrencyClientInterface;
-use GuzzleHttp\Psr7\Response;
 
 class ExchangeRatesApiClient implements CurrencyClientInterface
 {
@@ -22,9 +21,9 @@ class ExchangeRatesApiClient implements CurrencyClientInterface
         );
     }
 
-    public function request(string $method, string $url, array $parameters = []): Response
+    public function request(string $method, string $url, array $parameters = []): array
     {
-        return $this->client->$method($url, $parameters);
+        return json_decode($this->client->$method($url, $parameters)->getBody(), true);
     }
 
     public function getCurrencyHistoryAgainstBase(string $currency, string $baseCurrency, $startAt = null, $endAt = null)
@@ -38,6 +37,6 @@ class ExchangeRatesApiClient implements CurrencyClientInterface
             ]
         ];
 
-        return $this->client->request('get', '/history', $parameters)->getBody();
+        return $this->request('get', '/history', $parameters);
     }
 }
