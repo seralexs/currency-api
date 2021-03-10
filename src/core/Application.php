@@ -5,14 +5,14 @@ namespace Core;
 
 
 use Core\Router\Interfaces\RouterInterface;
-use Core\Router\Router;
+use Psr\Container\ContainerInterface;
 
 class Application
 {
-    private ?RouterInterface $router = null;
-    private $container;
+    private RouterInterface $router;
+    private ContainerInterface $container;
 
-    public function __construct(RouterInterface $router, $container)
+    public function __construct(RouterInterface $router, ContainerInterface $container)
     {
         $this->router = $router;
         $this->container = $container;
@@ -25,8 +25,6 @@ class Application
 
     public function handleRequest(): void
     {
-        if (!is_null($this->router)) {
-            $this->router->handleRequest($this->container);
-        }
+        $this->router->handleRequest($this->container);
     }
 }
