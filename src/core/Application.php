@@ -4,6 +4,7 @@
 namespace Core;
 
 
+use Core\Exceptions\PageCouldNotFindException;
 use Core\Router\Interfaces\RouterInterface;
 use Psr\Container\ContainerInterface;
 
@@ -25,6 +26,10 @@ class Application
 
     public function handleRequest(): void
     {
-        $this->router->handleRequest($this->container);
+        try {
+            $controller = $this->router->handleRequest($this->container);
+        } catch (PageCouldNotFindException $exception) {
+
+        }
     }
 }

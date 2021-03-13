@@ -3,9 +3,11 @@
 
 namespace Core\Currency;
 
+use App\Application\CurrencyExchange\GetCurrentCurrency\CurrencyDataProvider;
+use App\Model\Base\CurrencyCode;
 use Core\Currency\Interfaces\CurrencyClientInterface;
 
-class Currency
+class Currency implements CurrencyDataProvider
 {
     private CurrencyClientInterface $client;
 
@@ -33,4 +35,11 @@ class Currency
 //        return $this->request('get', '/history', $parameters);
         return $this->client->getCurrencyHistoryAgainstBase($currency, $baseCurrency, $startAt, $endAt);
     }
+
+    public function getCurrency(CurrencyCode $baseCurrency, CurrencyCode $currency)
+    {
+        // TODO: Implement getCurrency() method.
+    }
+
+
 }
