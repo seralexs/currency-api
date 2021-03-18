@@ -3,18 +3,18 @@
 
 namespace App\Controllers;
 
-use Core\Currency\Currency;
+use App\Application\CurrencyExchange\GetCurrentCurrency\CurrencyDataProvider;
 use Core\Request\Request;
-use Core\Response\JsonResponse;
-use Core\Response\Response;
 
-class HomePageController
+class HomePageController extends BaseController
 {
-    public function index(Request $request)
+    public function index(Request $request, CurrencyDataProvider $dataProvider)
     {
-        echo 'index';
-//        $currencyHistory = $currencyApi->getCurrencyHistoryAgainstBase('USD', 'EUR', '2021-03-17', '2021-03-17');
+        $currencyHistory = $dataProvider->getCurrencyHistoryAgainstBase('USD', 'EUR', '2021-03-17', '2021-03-17');
 
-//        return (new JsonResponse($currencyHistory, Response::HTTP_OK))->send();
+        return $this->success([
+            'success' => true,
+            'payload' => $currencyHistory
+        ]);
     }
 }
