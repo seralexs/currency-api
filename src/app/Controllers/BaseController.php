@@ -8,6 +8,8 @@
 
 namespace App\Controllers;
 
+use Core\Response\JsonResponse;
+use Core\Response\Response;
 
 abstract class BaseController
 {
@@ -15,7 +17,7 @@ abstract class BaseController
 
     public function success($payload)
     {
-        return json_encode([
+        return $this->json([
             'success' => true,
             'payload' => $payload
         ]);
@@ -23,12 +25,17 @@ abstract class BaseController
 
     public function error(string $errorCode, string $message, $httpCode = 500)
     {
-        return json_encode([
+        return $this->json([
             'success' => false,
             'error' => [
                 'code' => $errorCode,
                 'message' =>  $message
             ]
         ]);
+    }
+
+    public function json(array $data, $statusCode = Response::HTTP_OK)
+    {
+        return (new JsonResponse($data, $statusCode))->send();
     }
 }

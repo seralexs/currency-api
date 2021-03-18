@@ -2,22 +2,25 @@
 
 use App\Application\CurrencyExchange\GetCurrentCurrency\CurrencyDataProvider;
 use App\Application\CurrencyExchange\GetCurrentCurrency\GetCurrentCurrencyService;
-use App\Infrustructure\Repository\CurrencyLog\CurrencyLogDbRepository;
+use App\Infrastructure\Repository\CurrencyLog\CurrencyLogDbRepository;
+use App\Infrastructure\Repository\CurrencyLog\CurrencyLogInMemoryRepository;
+use Core\Currency\ExchangeRatesApiClient;
+use Core\Currency\Interfaces\CurrencyClientInterface;
 use App\Model\Repository\CurrencyLogRepository;
 use Core\Currency\Currency;
+use Core\Request\Request;
 use function DI\create;
 
 return [
-    \Core\Request\Request::class => \Core\Request\Request::createFromGlobals(),
+    Request::class => Request::createFromGlobals(),
 
-    \Core\Currency\Interfaces\CurrencyClientInterface::class => new \Core\Currency\ExchangeRatesApiClient(),
-    \Core\Currency\Currency::class => function (\Psr\Container\ContainerInterface $container) {
-        return new \Core\Currency\Currency($container->get(\Core\Currency\Interfaces\CurrencyClientInterface::class));
+    CurrencyClientInterface::class => create(ExchangeRatesApiClient::class),
+
+    CurrencyDataProvider::class => function (CurrencyClientInterface $currencyClient) {
+        return new Currency($currencyClient);
     },
 
-    CurrencyDataProvider::class => create(Currency::class),
-
-    CurrencyLogRepository::class => create(CurrencyLogDbRepository::class),
+    CurrencyLogRepository::class => create(CurrencyLogInMemoryRepository::class),
 
     GetCurrentCurrencyService::class => function(CurrencyDataProvider $dataProvider, CurrencyLogRepository $logRepository) {
         return new GetCurrentCurrencyService($dataProvider, $logRepository);

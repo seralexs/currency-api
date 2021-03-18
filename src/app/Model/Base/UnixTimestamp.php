@@ -27,6 +27,6 @@ class UnixTimestamp
 
     public static function fromString($date = "now"): self
     {
-        return self(new DateTime($date));
+        return new self(new DateTime($date));
     }
 }

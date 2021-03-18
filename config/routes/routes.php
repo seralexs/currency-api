@@ -2,5 +2,5 @@
 
 return [
     '/' => 'HomePageController@index',
-    '/home' => 'HomePageController@home',
+    '/exchange' => 'CurrencyExchangeController@exchange',
 ];

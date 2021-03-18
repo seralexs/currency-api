@@ -3,6 +3,7 @@
 
 namespace Core\Router;
 
+use Core\Request\Request;
 use Core\Router\Interfaces\RouterInterface;
 
 class Router implements RouterInterface
@@ -11,9 +12,12 @@ class Router implements RouterInterface
 
     private array $parameters = [];
 
-    public function __construct(array $routes)
+    private Request $request;
+
+    public function __construct(array $routes, Request $request)
     {
         $this->routes = $routes;
+        $this->request = $request;
     }
 
     public function getRoutes(): array
@@ -23,9 +27,7 @@ class Router implements RouterInterface
 
     public function handleRequest($container): void
     {
-        $uri = $_SERVER['REQUEST_URI'];
-
-        if ($this->match($uri)) {
+        if ($this->match($this->request->getPathInfo())) {
             $controllerClass = $this->getNamespace().$this->parameters['controller'];
 
             if (class_exists($controllerClass)) {

@@ -22,7 +22,7 @@ class CurrencyLogEntity
 
     private $currency;
 
-    public function __construct(UnixTimestamp $addTimestamp, CurrencyCode $baseCurrency, CurrencyCode $currency): self
+    public function __construct(UnixTimestamp $addTimestamp, CurrencyCode $baseCurrency, CurrencyCode $currency)
     {
         $this->addTimestamp = $addTimestamp;
         $this->baseCurrency = $baseCurrency;
@@ -49,6 +49,9 @@ class CurrencyLogEntity
     {
         return [
           'id' => $this->id,
+          'timestamp' => $this->addTimestamp,
+          'base_currency' => $this->baseCurrency,
+          'currency' => $this->currency,
         ];
     }
 

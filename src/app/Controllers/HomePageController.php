@@ -10,10 +10,11 @@ use Core\Response\Response;
 
 class HomePageController
 {
-    public function index(Request $request, Currency $currencyApi)
+    public function index(Request $request)
     {
-        $currencyHistory = $currencyApi->getCurrencyHistoryAgainstBase('USD', 'EUR', '2021-02-01', '2021-02-10');
+        echo 'index';
+//        $currencyHistory = $currencyApi->getCurrencyHistoryAgainstBase('USD', 'EUR', '2021-03-17', '2021-03-17');
 
-        return (new JsonResponse($currencyHistory, Response::HTTP_OK))->send();
+//        return (new JsonResponse($currencyHistory, Response::HTTP_OK))->send();
     }
 }

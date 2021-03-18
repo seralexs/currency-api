@@ -15,12 +15,12 @@ use InvalidArgumentException;
 
 class CurrencyExchangeController extends BaseController
 {
-    public function echange(GetCurrentCurrencyService $currentCurrencyService, Request $request)
+    public function exchange(GetCurrentCurrencyService $currentCurrencyService, Request $request)
     {
         try {
             $currentCurrency = $currentCurrencyService->getCurrency(
                 $request->get("base_currency"),
-                $request->get("currency")
+                $request->get("currency"),
             );
 
             return $this->success($currentCurrency);

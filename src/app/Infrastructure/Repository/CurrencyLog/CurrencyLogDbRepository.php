@@ -6,7 +6,7 @@
  * Time: 8:14 PM
  */
 
-namespace App\Infrustructure\Repository\CurrencyLog;
+namespace App\Infrastructure\Repository\CurrencyLog;
 
 
 use App\Model\Entity\CurrencyLogEntity;

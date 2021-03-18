@@ -28,18 +28,21 @@ class GetCurrentCurrencyService
 
     public function getCurrency(string $baseCurrencyCode, string $currency)
     {
+        //does it belong to service or data provider (Currency::class)
+        //is it better to move this logic to data provider??
         $baseCode = new CurrencyCode($baseCurrencyCode);
         $currency = new CurrencyCode($currency);
+        //
 
         $result = $this->dataProvider->getCurrency($baseCode, $currency);
 
-        $currencyLogEntity = new CurrencyLogEntity(
-            UnixTimestamp::fromString("now"),
-            $baseCode,
-            $currency
-        );
+//        $currencyLogEntity = new CurrencyLogEntity(
+//            UnixTimestamp::fromString("now"),
+//            $baseCode,
+//            $currency
+//        );
 
-        $this->logRepository->persist($currencyLogEntity);
+//        $this->logRepository->persist($currencyLogEntity);
         return $result;
     }
 }
