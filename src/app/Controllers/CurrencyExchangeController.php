@@ -19,8 +19,8 @@ class CurrencyExchangeController extends BaseController
     {
         try {
             $currentCurrency = $currentCurrencyService->getCurrency(
-                $request->get("base_currency"),
-                $request->get("currency"),
+                $request->get("base_currency", "USD"),
+                $request->get("currency", "EUR"),
             );
 
             return $this->success($currentCurrency);

@@ -8,11 +8,8 @@
 
 namespace App\Application\CurrencyExchange\GetCurrentCurrency;
 
-
-use App\Model\Base\CurrencyCode;
-use App\Model\Base\UnixTimestamp;
-use App\Model\Entity\CurrencyLogEntity;
 use App\Model\Repository\CurrencyLogRepository;
+use Core\Currency\Interfaces\CurrencyDataProvider;
 
 class GetCurrentCurrencyService
 {
@@ -30,11 +27,11 @@ class GetCurrentCurrencyService
     {
         //does it belong to service or data provider (Currency::class)
         //is it better to move this logic to data provider??
-        $baseCode = new CurrencyCode($baseCurrencyCode);
-        $currency = new CurrencyCode($currency);
+//        $baseCode = new CurrencyCode($baseCurrencyCode);
+//        $currency = new CurrencyCode($currency);
         //
 
-        $result = $this->dataProvider->getCurrency($baseCode, $currency);
+        $result = $this->dataProvider->getCurrency($baseCurrencyCode, $currency);
 
 //        $currencyLogEntity = new CurrencyLogEntity(
 //            UnixTimestamp::fromString("now"),

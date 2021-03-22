@@ -4,6 +4,7 @@
 namespace Core\Currency;
 
 
+use App\Model\Base\CurrencyCode;
 use Core\Currency\Interfaces\CurrencyClientInterface;
 
 class ExchangeRatesApiClient implements CurrencyClientInterface
@@ -28,10 +29,13 @@ class ExchangeRatesApiClient implements CurrencyClientInterface
 
     public function getCurrencyHistoryAgainstBase(string $currency, string $baseCurrency, $startAt = null, $endAt = null)
     {
+        $baseCurrency = new CurrencyCode($baseCurrency);
+        $currency = new CurrencyCode($currency);
+
         $parameters = [
             'query' => [
-                'symbols' => $currency,
-                'base' => $baseCurrency,
+                'symbols' => $currency->getValue(),
+                'base' => $baseCurrency->getValue(),
                 'start_at' => !is_null($startAt) ? $startAt : (new \DateTime())->modify('-1 month')->format('Y-m-d'),
                 'end_at' => !is_null($endAt) ? $endAt : (new \DateTime())->format('Y-m-d'),
             ]

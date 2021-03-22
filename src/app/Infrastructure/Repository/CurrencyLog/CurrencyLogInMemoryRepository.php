@@ -18,11 +18,16 @@ class CurrencyLogInMemoryRepository implements CurrencyLogRepository
 
     public function persist(CurrencyLogEntity $entity)
     {
-        $this->rows[$entity->getId()] = $entity->getData();
+        $this->rows[] = $entity->getData();
     }
 
-    public function getById(int $id): CurrencyLogEntity
+    public function getLogs()
     {
-        return $this->rows[$id];
+        return $this->rows;
     }
+
+//    public function getById(int $id): CurrencyLogEntity
+//    {
+//        return $this->rows[$id];
+//    }
 }

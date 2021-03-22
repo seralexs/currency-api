@@ -1,6 +1,6 @@
 <?php
 
-use App\Application\CurrencyExchange\GetCurrentCurrency\CurrencyDataProvider;
+use Core\Currency\Interfaces\CurrencyDataProvider;
 use App\Application\CurrencyExchange\GetCurrentCurrency\GetCurrentCurrencyService;
 use App\Infrastructure\Repository\CurrencyLog\CurrencyLogDbRepository;
 use App\Infrastructure\Repository\CurrencyLog\CurrencyLogInMemoryRepository;
@@ -9,6 +9,7 @@ use Core\Currency\Interfaces\CurrencyClientInterface;
 use App\Model\Repository\CurrencyLogRepository;
 use Core\Currency\Currency;
 use Core\Request\Request;
+use Core\Currency\Logger\CurrencyLoggerProxy;
 use function DI\create;
 
 return [
@@ -16,9 +17,17 @@ return [
 
     CurrencyClientInterface::class => create(ExchangeRatesApiClient::class),
 
-    CurrencyDataProvider::class => function (CurrencyClientInterface $currencyClient) {
+    Currency::class => function (CurrencyClientInterface $currencyClient) {
         return new Currency($currencyClient);
     },
+
+    CurrencyDataProvider::class => function (Currency $currency) {
+        return $currency;
+    },
+
+//    CurrencyLoggerProxy::class => function (CurrencyDataProvider $dataProvider) {
+//        return new
+//    },
 
     CurrencyLogRepository::class => create(CurrencyLogInMemoryRepository::class),
 
